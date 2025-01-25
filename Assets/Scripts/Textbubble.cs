@@ -6,8 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class TextBubble : MonoBehaviour
 {
-    private string[] dialogue = { "This is first", "This is last and very long" };
+    private string[][] dialogueList = { 
+        new string[] {"I am NPC1", "I am very sad"}, 
+        new string[] {"I am NPC4", "I am very happy"},
+        new string[] {"I am NPC3", "I am very shy"},
+        new string[] {"I am NPC2", "I am very angry"}
+    };
     private int dialogueIndex = 0;
+    private int npc = 0;
     public TextMeshProUGUI bubbleText;
     public GameObject elements;
     public float textSpeed;
@@ -28,8 +34,9 @@ public class TextBubble : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (((Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.Return))) && overTrigger)
+        if ((Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.Return)) && overTrigger)
         {
+            string[] dialogue = dialogueList[npc];
             if (triggered)
             {
                 elements.SetActive(true);
@@ -55,6 +62,8 @@ public class TextBubble : MonoBehaviour
                 else
                 {
                     elements.SetActive(false); // Close speech bubble
+                    npc++;
+                    dialogueIndex = 0;
                     overTrigger = false;
                     cameraScript.enabled = true;
                     playerScript.enabled = true;
@@ -71,16 +80,19 @@ public class TextBubble : MonoBehaviour
     // Prints the characters one by one
     IEnumerator SlowPrint()
     {
-        foreach (char c in dialogue[dialogueIndex])
+        foreach (char c in dialogueList[npc][dialogueIndex])
         {
             bubbleText.text += c;
             yield return new WaitForSeconds(textSpeed);
         }
     }
 
-    public void called()
+    public void called(int num)
     {
-        triggered = true;
-        overTrigger = true;
+        if (npc == num && num < dialogueList.Length)
+        {   
+            triggered = true;
+            overTrigger = true;
+        }
     }
 }
