@@ -8,6 +8,8 @@ public class TextBubble : MonoBehaviour
 {
     private string[] dialogue = { "This is first", "This is last and very long" };
     private int dialogueIndex = 0;
+
+
     public TextMeshProUGUI bubbleText;
     public GameObject elements;
     public float textSpeed;
