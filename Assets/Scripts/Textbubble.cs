@@ -4,66 +4,40 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class TextBubble : MonoBehaviour
+public class scr : MonoBehaviour
 {
-    private string[] dialogue = { "This is first", "This is last and very long" };
+    private string[] dialogue = { "This is first", "this is last" };
     private int dialogueIndex = 0;
-
-
     public TextMeshProUGUI bubbleText;
-    public GameObject elements;
+
     public float textSpeed;
-
-    public ThirdPersonCamera cameraScript;
-    public PlayerMovement playerScript;
-    public Interactor playerInteractor;
-
-    private bool triggered = false;
-    private bool overTrigger = false;
-
+    
     // Start is called before the first frame update
     void Start()
     {
-        elements.SetActive(false);
+        bubbleText.text = "";
+        StartCoroutine(SlowPrint());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (((Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.Return))) && overTrigger)
+        if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.Return))
         {
-            if (triggered)
+            if (bubbleText.text == dialogue[dialogueIndex])
             {
-                elements.SetActive(true);
-                cameraScript.enabled = false; // For testing
-                playerScript.enabled = false;
-                playerInteractor.enabled = false;
                 bubbleText.text = "";
-                triggered = false;
-                StartCoroutine(SlowPrint());
-            }
-            else if (dialogueIndex >= dialogue.Length)
-            {
-                //pass
-            }
-            else if (bubbleText.text == dialogue[dialogueIndex])
-            {
-                bubbleText.text = ""; // Get ready to print next message once finished
                 dialogueIndex++;
-                if (dialogueIndex < dialogue.Length)
+                if (dialogueIndex >= dialogue.Length)
                 {
-                    StartCoroutine(SlowPrint());
+                    SceneManager.LoadScene(0); // I hard coded this don't mess with the build scene order
                 }
                 else
                 {
-                    elements.SetActive(false); // Close speech bubble
-                    overTrigger = false;
-                    cameraScript.enabled = true;
-                    playerScript.enabled = true;
-                    playerInteractor.enabled = true;
+                    StartCoroutine(SlowPrint());
                 }
             }
-            else // Print out rest of text instantly
+            else
             {
                 StopAllCoroutines();
                 bubbleText.text = dialogue[dialogueIndex];
@@ -78,11 +52,5 @@ public class TextBubble : MonoBehaviour
             bubbleText.text += c;
             yield return new WaitForSeconds(textSpeed);
         }
-    }
-
-    public void called()
-    {
-        triggered = true;
-        overTrigger = true;
     }
 }

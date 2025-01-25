@@ -304,7 +304,6 @@ GameObject:
   - component: {fileID: 260320846}
   - component: {fileID: 260320845}
   - component: {fileID: 260320844}
-  - component: {fileID: 260320848}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -395,21 +394,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &260320848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 260320843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7e21be217633f540aaebda358557aae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bubbleText: {fileID: 203274447}
-  elements: {fileID: 412796628}
-  textSpeed: 0.1
 --- !u!1 &412796628
 GameObject:
   m_ObjectHideFlags: 0
@@ -419,8 +403,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 412796629}
+  - component: {fileID: 412796630}
   m_Layer: 5
-  m_Name: BottomLeft
+  m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -447,6 +432,19 @@ RectTransform:
   m_AnchoredPosition: {x: 600, y: 125}
   m_SizeDelta: {x: 1200, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &412796630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 412796628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7e21be217633f540aaebda358557aae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bubbleText: {fileID: 203274447}
 --- !u!1 &458324607
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,6 +548,7 @@ GameObject:
   - component: {fileID: 1274918763}
   - component: {fileID: 1274918766}
   - component: {fileID: 1274918765}
+  - component: {fileID: 1274918764}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -576,6 +575,19 @@ RectTransform:
   m_AnchoredPosition: {x: 600, y: 125}
   m_SizeDelta: {x: 1200, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1274918764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1274918762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7e21be217633f540aaebda358557aae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bubbleText: {fileID: 0}
 --- !u!114 &1274918765
 MonoBehaviour:
   m_ObjectHideFlags: 0
