@@ -4,17 +4,23 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class scr : MonoBehaviour
+public class TextBubble : MonoBehaviour
 {
-    private string[] dialogue = { "This is first", "this is last" };
+    private string[] dialogue = { "This is first", "This is last and very long" };
     private int dialogueIndex = 0;
     public TextMeshProUGUI bubbleText;
-
+    public GameObject elements;
     public float textSpeed;
+
+    public ThirdPersonCamera cameraScript;
+    public PlayerMovement playerScript;
+    private bool triggered = false;
     
     // Start is called before the first frame update
     void Start()
     {
+        cameraScript.enabled = false; // For testing
+        playerScript.enabled = false;
         bubbleText.text = "";
         StartCoroutine(SlowPrint());
     }
@@ -24,23 +30,39 @@ public class scr : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.Return))
         {
-            if (bubbleText.text == dialogue[dialogueIndex])
+            if (!triggered)
             {
-                bubbleText.text = "";
-                dialogueIndex++;
-                if (dialogueIndex >= dialogue.Length)
-                {
-                    SceneManager.LoadScene(0); // I hard coded this don't mess with the build scene order
-                }
-                else
-                {
-                    StartCoroutine(SlowPrint());
-                }
+                // Make it so it is in proximity with character (not coded yet)
+                triggered = true;
             }
+
             else
             {
-                StopAllCoroutines();
-                bubbleText.text = dialogue[dialogueIndex];
+                cameraScript.enabled = false;
+                if (dialogueIndex >= dialogue.Length)
+                {
+                    //pass
+                }
+                else if (bubbleText.text == dialogue[dialogueIndex])
+                {
+                    bubbleText.text = ""; // Get ready to print next message once finished
+                    dialogueIndex++;
+                    if (dialogueIndex < dialogue.Length)
+                    {
+                        StartCoroutine(SlowPrint());
+                    }
+                    else
+                    {
+                        elements.SetActive(false); // Close speech bubble
+                        cameraScript.enabled = true;
+                        playerScript.enabled = true;
+                    }
+                }
+                else // Print out rest of text instantly
+                {
+                    StopAllCoroutines();
+                    bubbleText.text = dialogue[dialogueIndex];
+                }
             }
         }
     }

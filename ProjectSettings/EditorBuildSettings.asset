@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/ThirdPersonMovement.unity
+    guid: 44a95811e5a675445ad5c52a3d6764bc
+  - enabled: 1
+    path: Assets/Scenes/HUD.unity
+    guid: 3a95959642d0b62498c96b7ee9f533e3
   m_configObjects: {}

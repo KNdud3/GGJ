@@ -24,27 +24,29 @@ public class ThirdPersonCamera : MonoBehaviour
 
     void LateUpdate()
     {
-        // Handle mouse scroll input for zooming
-        float scrollInput = Input.GetAxis("Mouse ScrollWheel");
-        currentZoom -= scrollInput * zoomSpeed;
-        currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom); // Clamp the zoom level
+        if (enabled){
+            // Handle mouse scroll input for zooming
+            float scrollInput = Input.GetAxis("Mouse ScrollWheel");
+            currentZoom -= scrollInput * zoomSpeed;
+            currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom); // Clamp the zoom level
 
-        // Mouse input for rotation
-        currentX += Input.GetAxis("Mouse X") * rotationSpeed;
-        currentY -= Input.GetAxis("Mouse Y") * rotationSpeed;
+            // Mouse input for rotation
+            currentX += Input.GetAxis("Mouse X") * rotationSpeed;
+            currentY -= Input.GetAxis("Mouse Y") * rotationSpeed;
 
-        // Clamp vertical rotation
-        currentY = Mathf.Clamp(currentY, yMinLimit, yMaxLimit);
+            // Clamp vertical rotation
+            currentY = Mathf.Clamp(currentY, yMinLimit, yMaxLimit);
 
-        // Calculate new offset based on zoom
-        Vector3 zoomedOffset = offset.normalized * currentZoom;
+            // Calculate new offset based on zoom
+            Vector3 zoomedOffset = offset.normalized * currentZoom;
 
-        // Calculate new camera position and rotation
-        Quaternion rotation = Quaternion.Euler(currentY, currentX, 0);
-        Vector3 position = player.position + rotation * zoomedOffset;
+            // Calculate new camera position and rotation
+            Quaternion rotation = Quaternion.Euler(currentY, currentX, 0);
+            Vector3 position = player.position + rotation * zoomedOffset;
 
-        // Set camera position and look at the player
-        transform.position = Vector3.Lerp(transform.position,position,Time.deltaTime*5f);
-        transform.LookAt(player.position);
+            // Set camera position and look at the player
+            transform.position = Vector3.Lerp(transform.position,position,Time.deltaTime*5f);
+            transform.LookAt(player.position);
+        }
     }
 }
