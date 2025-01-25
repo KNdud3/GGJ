@@ -63,7 +63,6 @@ public class TextBubble : MonoBehaviour
             }
             else // Print out rest of text instantly
             {
-                Debug.Log("run");
                 StopAllCoroutines();
                 bubbleText.text = dialogue[dialogueIndex];
             }
