@@ -6,14 +6,27 @@ using UnityEngine.SceneManagement;
 
 public class TextBubble : MonoBehaviour
 {
-    private string[][] dialogueList = { 
+    private string[][] dialogueList = { // When you can solve
         new string[] {"I am NPC1", "I am very sad"}, 
         new string[] {"I am NPC4", "I am very happy"},
         new string[] {"I am NPC3", "I am very shy"},
         new string[] {"I am NPC2", "I am very angry"}
     };
+    private string[][] dialogueList2 = {  // Before you can solve
+    new string[] {"If you see this something is wrong"}, 
+    new string[] {"You are very weird","You can't talk and don't know how to be happy"},
+    new string[] {"AHHHHHHH don't talk to me","I don't like meeting new people"},
+    new string[] {"FGJHJKIYGGBJKIF", "CAN'T YOU SEE I'M MAD"}
+    };
+    private string[][] dialogueListSolv = { // After you solve
+    new string[] {"Thank you for helping me","Speaking to you let me understand my feelings"}, 
+    new string[] {"Sorry for being so rude","I understand now people can all be happy in different ways"},
+    new string[] {"I see I shouldn't judge a book by its cover", "I will try and overcome my shyness","I hope you can do the same"},
+    new string[] {"Wow speaking to you really allowed me to cool down", "Talking is a really powerful thing"}
+    };
     private int dialogueIndex = 0;
     private int npc = 0;
+    private string[] dialogue;
     public TextMeshProUGUI bubbleText;
     public GameObject elements;
     public float textSpeed;
@@ -24,6 +37,7 @@ public class TextBubble : MonoBehaviour
 
     private bool triggered = false;
     private bool overTrigger = false;
+    private bool correctNpc = false;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +50,6 @@ public class TextBubble : MonoBehaviour
     {
         if ((Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.Return)) && overTrigger)
         {
-            string[] dialogue = dialogueList[npc];
             if (triggered)
             {
                 elements.SetActive(true);
@@ -62,7 +75,10 @@ public class TextBubble : MonoBehaviour
                 else
                 {
                     elements.SetActive(false); // Close speech bubble
-                    npc++;
+                    if (correctNpc){
+                        correctNpc = false;
+                        npc++;
+                    }
                     dialogueIndex = 0;
                     overTrigger = false;
                     cameraScript.enabled = true;
@@ -80,7 +96,7 @@ public class TextBubble : MonoBehaviour
     // Prints the characters one by one
     IEnumerator SlowPrint()
     {
-        foreach (char c in dialogueList[npc][dialogueIndex])
+        foreach (char c in dialogue[dialogueIndex])
         {
             bubbleText.text += c;
             yield return new WaitForSeconds(textSpeed);
@@ -89,11 +105,20 @@ public class TextBubble : MonoBehaviour
 
     public void called(int num)
     {
-        Debug.Log(num);
-        if (npc == num && num < dialogueList.Length)
+        if (npc == num)
         {   
-            triggered = true;
-            overTrigger = true;
+            dialogue = dialogueList[num];
+            correctNpc = true;
         }
+        else if (num > npc)
+        {
+            dialogue = dialogueList2[num];
+        }
+        else
+        {
+            dialogue = dialogueListSolv[num];
+        }
+        triggered = true;
+        overTrigger = true;
     }
 }
