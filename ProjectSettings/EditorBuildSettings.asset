@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/ThirdPersonMovement.unity
+    path: Assets/Scenes/Main Scene.unity
     guid: 44a95811e5a675445ad5c52a3d6764bc
   m_configObjects: {}
