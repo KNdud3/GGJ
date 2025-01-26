@@ -6,23 +6,27 @@ using UnityEngine.SceneManagement;
 
 public class TextBubble : MonoBehaviour
 {
+    // 1 brown/sad
+    // 4 blond/happy
+    // 3 green/shy
+    // 2 red/green
     private string[][] dialogueList = { // When you can solve
-        new string[] {"Oh hey, I'm sorry I dont really feel like talking right now"}, 
-        new string[] {"I am NPC4", "I am very happy"},
-        new string[] {"Why are you staring at me?"},
-        new string[] {"Whats your problem", "Just go away"}
+        new string[] {"Oh hey... "," I'm sorry I dont really feel like talking right now..."}, 
+        new string[] {"Oh it's you again!", "Want to have a happy conversation? Oh wait. You can't."},
+        new string[] {"Please don't look at me...", "So awkward..."},
+        new string[] {"Whats your problem?", "Just go away"}
     };
     private string[][] dialogueList2 = {  // Before you can solve
     new string[] {"If you see this something is wrong"}, 
-    new string[] {"You are very weird","You can't talk and don't know how to be happy"},
-    new string[] {"ahh..","uhh.."},
-    new string[] {"Whats your deal, cat got your tounge?","Go talk to blondie or something"}
+    new string[] {"What a nice day it is today! Nothing can ruin my mood!","Not even a weirdo like you who can't talk or be happy!"},
+    new string[] {"ahhhhhhh..","uhhhhhhhh.."},
+    new string[] {"Whats your deal, cat got your tounge?","Get out of my face, go talk to blondie or something."}
     };
     private string[][] dialogueListSolv = { // After you solve
-    new string[] {"Thanks a lot", "Sometimes you just need someone to talk to you know"}, 
-    new string[] {"Sorry for being so rude","I understand now people can all be happy in different ways"},
-    new string[] {"I get really shy around new people but seeing you make the effort gives me some confidence"},
-    new string[] {"I dont know why I was so mad earlier", "Thanks for bearing with me"}
+    new string[] {"Thanks a lot.", "Sometimes you just need someone who understands, you know?"}, 
+    new string[] {"Sorry for being so rude.","I understand now people can all be happy and communicate in different ways."},
+    new string[] {"I get really shy around new people but seeing you make the effort gives me some confidence."},
+    new string[] {"I dont know why I was so mad earlier.", "Thanks for bearing with me"}
     };
     private int dialogueIndex = 0;
     private int npc = 0;
