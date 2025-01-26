@@ -4043,6 +4043,8 @@ MonoBehaviour:
   puzzles:
   - {fileID: 1026820326}
   - {fileID: 1559556235}
+  - {fileID: 1559556235}
+  - {fileID: 1559556235}
   mainCamera: {fileID: 963194227}
   puzzleCamera: {fileID: 1310682950}
 --- !u!4 &1791874860
