@@ -46,6 +46,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
+    public float stdHeight = 0.7f; //may mess up animation, remove when doing that
     public Transform cameraTransform;
 
     private Animator animator;
@@ -78,6 +79,11 @@ public class PlayerMovement : MonoBehaviour
         // Calculate the movement direction based on the input and camera orientation
         Vector3 moveDirection = (cameraForward * moveZ + cameraRight * moveX).normalized;
 
+        // Set the player's height to the standard height
+        Vector3 position = transform.position;
+        position.y = stdHeight;
+        transform.position = position;
+
         // Update animation parameters (Speed = magnitude of movement)
 
         animator.SetBool("IsWalking", false);
@@ -92,6 +98,23 @@ public class PlayerMovement : MonoBehaviour
             // Rotate the player to face the movement direction
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f); // Smooth rotation
+        }
+        //DEBUG
+        if (Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            bubbles.called(0);
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            bubbles.called(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            bubbles.called(2);
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad4))
+        {
+            bubbles.called(3);
         }
     }
 }
