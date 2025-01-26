@@ -11,6 +11,7 @@ public class Node : MonoBehaviour
     private void Start()
     {
         nodeRenderer = GetComponent<Renderer>();
+        ValidateFirstLevelConnections();
         CreateEdges();
     }
 
@@ -21,7 +22,19 @@ public class Node : MonoBehaviour
             DestroyEdges();
         }
     }
-
+    private void ValidateFirstLevelConnections()
+    {
+        var currentNodes = new List<GameObject>(connectedNodes);
+        foreach (var node in currentNodes)
+        {
+            if (node == null) continue;
+            var nodeScript = node.GetComponent<Node>();
+            if (nodeScript != null && !nodeScript.connectedNodes.Contains(gameObject))
+            {
+                nodeScript.connectedNodes.Add(gameObject);
+            }
+        }
+    }
     private void CreateEdges()
     {
         if (!Application.isPlaying) return;
@@ -57,38 +70,38 @@ public class Node : MonoBehaviour
     }
     private void PopConnectedNodes()
     {
-        var nodesToPop = new List<GameObject>(connectedNodes);
-        var newConnections = new HashSet<GameObject>();
+    var nodesToPop = new List<GameObject>(connectedNodes);
+    var newConnections = new HashSet<GameObject>();
 
-        foreach (var node in nodesToPop)
+    foreach (var node in nodesToPop)
+    {
+        var nodeScript = node.GetComponent<Node>();
+        if (nodeScript == null) continue;
+
+        foreach (var connection in nodeScript.connectedNodes)
         {
-            var nodeScript = node.GetComponent<Node>();
-            if (nodeScript == null) continue;
+            if (connection == null || connection == gameObject || nodesToPop.Contains(connection))
+                continue;
 
-            foreach (var connection in nodeScript.connectedNodes)
+            newConnections.Add(connection);
+            var connScript = connection.GetComponent<Node>();
+            if (connScript != null)
             {
-                if (connection == null || connection == gameObject || nodesToPop.Contains(connection))
-                    continue;
-
-                newConnections.Add(connection);
-                var connScript = connection.GetComponent<Node>();
-                if (connScript != null)
+                connScript.connectedNodes.Remove(node);
+                if (!connScript.connectedNodes.Contains(gameObject))
                 {
-                    connScript.connectedNodes.Remove(node);
-                    if (!connScript.connectedNodes.Contains(gameObject))
-                    {
-                        connScript.connectedNodes.Add(gameObject);
-                    }
+                    connScript.connectedNodes.Add(gameObject);
                 }
             }
-
-            nodeScript.DestroyEdges();
-            Destroy(node);
         }
 
-        connectedNodes.Clear();
-        connectedNodes.AddRange(newConnections);
-        CreateEdges();
+        nodeScript.DestroyEdges();
+        Destroy(node);
+    }
+
+    connectedNodes.Clear();
+    connectedNodes.AddRange(newConnections);
+    CreateEdges();
     }
 
     public void DestroyEdges()
