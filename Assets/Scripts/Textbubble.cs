@@ -75,15 +75,16 @@ public class TextBubble : MonoBehaviour
                 else
                 {
                     elements.SetActive(false); // Close speech bubble
-                    if (correctNpc){
-                        correctNpc = false;
-                        npc++;
-                    }
                     dialogueIndex = 0;
                     overTrigger = false;
                     cameraScript.enabled = true;
                     playerScript.enabled = true;
                     playerInteractor.enabled = true;
+                    if (correctNpc){
+                        correctNpc = false;
+                        npc++;
+                        SceneManager.LoadScene(sceneName:"Puzzle");
+                    }
                 }
             }
             else // Print out rest of text instantly
