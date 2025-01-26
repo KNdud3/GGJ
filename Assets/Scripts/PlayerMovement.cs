@@ -10,6 +10,9 @@ public class PlayerMovement : MonoBehaviour
 
     private Animator animator;
 
+    public LayerMask layerMask;
+    public float collisionOffset=0.2f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,14 +52,26 @@ public class PlayerMovement : MonoBehaviour
         // If there is movement, apply the movement and rotation
         if (moveDirection.magnitude > 0)
         {
-            animator.SetBool("IsWalking", true);
+            
 
-            // Move the player by directly updating the position
-            transform.Translate(moveDirection * moveSpeed * Time.deltaTime, Space.World);
+            //// Move the player by directly updating the position
+            //transform.Translate(moveDirection * moveSpeed * Time.deltaTime, Space.World);
 
-            // Rotate the player to face the movement direction
-            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f); // Smooth rotation
+            //// Rotate the player to face the movement direction
+            //Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f); // Smooth rotation
+
+            // Check for collisions in the direction of movement
+            if (!Physics.Raycast(transform.position, moveDirection, collisionOffset, layerMask))
+            {
+                animator.SetBool("IsWalking", true);
+                // Move the player by directly updating the position
+                transform.Translate(moveDirection * moveSpeed * Time.deltaTime, Space.World);
+
+                // Rotate the player to face the movement direction
+                Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f); // Smooth rotation
+            }
         }
         ////DEBUG
         //if (Input.GetKeyDown(KeyCode.Keypad1))
