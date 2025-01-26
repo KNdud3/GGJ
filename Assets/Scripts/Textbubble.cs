@@ -42,11 +42,14 @@ public class TextBubble : MonoBehaviour
     private bool triggered = false;
     private bool overTrigger = false;
     private bool correctNpc = false;
+    
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
         elements.SetActive(false);
+        gameManager = GameManager.Instance;
     }
 
     // Update is called once per frame
@@ -79,7 +82,7 @@ public class TextBubble : MonoBehaviour
                 else
                 {
                     if (correctNpc){
-                        SceneManager.LoadScene(sceneName:"Puzzle");
+                        gameManager.StartPuzzle();
                         correctNpc = false;
                         npc++;
                     }

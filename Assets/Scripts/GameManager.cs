@@ -1,22 +1,27 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
+using UnityEditor.Experimental.GraphView;
 
 public class GameManager : MonoBehaviour 
 {
     public static GameManager Instance { get; private set; }
     public List<GameObject> puzzles;
     private int currentPuzzleIndex = 0;
-    public string mainSceneName = "Main Scene";
-    public string puzzleSceneName = "Puzzle";
+    public Camera mainCamera;
+    public Camera puzzleCamera;
+    
+
 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            puzzleCamera.gameObject.SetActive(false);
+            DeactivateAllPuzzles();
         }
         else
         {
@@ -28,18 +33,18 @@ public class GameManager : MonoBehaviour
     {
         if (currentPuzzleIndex < puzzles.Count)
         {
-            SceneManager.LoadScene(puzzleSceneName);
+            mainCamera.gameObject.SetActive(false);
+            puzzleCamera.gameObject.SetActive(true);
+            puzzles[currentPuzzleIndex].SetActive(true);
+            EnableCursor();
         }
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    public void ReturnToMain()
     {
-        if (scene.name == puzzleSceneName)
-        {
-            DeactivateAllPuzzles();
-            LoadCurrentPuzzle();
-            EnableCursor();
-        }
+        DeactivateAllPuzzles();
+        puzzleCamera.gameObject.SetActive(false);
+        mainCamera.gameObject.SetActive(true);
     }
 
     private void DeactivateAllPuzzles()
@@ -50,33 +55,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void LoadCurrentPuzzle()
-    {
-        if (currentPuzzleIndex < puzzles.Count)
-        {
-            puzzles[currentPuzzleIndex].SetActive(true);
-            var puzzle = puzzles[currentPuzzleIndex].GetComponent<Puzzle>();
-            if (puzzle != null)
-            {
-                puzzle.Start();
-            }
-        }
-    }
-
     private void EnableCursor()
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
+
     public void OnPuzzleComplete()
     {
         puzzles[currentPuzzleIndex].SetActive(false);
         currentPuzzleIndex++;
-        SceneManager.LoadScene(mainSceneName);
-    }
-
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        ReturnToMain();
     }
 }
