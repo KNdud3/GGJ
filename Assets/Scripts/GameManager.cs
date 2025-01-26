@@ -1,9 +1,6 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections.Generic;
-using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
-using UnityEditor.Experimental.GraphView;
+
 
 public class GameManager : MonoBehaviour 
 {
