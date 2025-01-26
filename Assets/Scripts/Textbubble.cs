@@ -74,11 +74,12 @@ public class TextBubble : MonoBehaviour
                 }
                 else
                 {
-                    elements.SetActive(false); // Close speech bubble
                     if (correctNpc){
+                        SceneManager.LoadScene(sceneName:"Puzzle");
                         correctNpc = false;
                         npc++;
                     }
+                    elements.SetActive(false); // Close speech bubble
                     dialogueIndex = 0;
                     overTrigger = false;
                     cameraScript.enabled = true;
