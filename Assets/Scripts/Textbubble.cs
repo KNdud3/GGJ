@@ -89,6 +89,7 @@ public class TextBubble : MonoBehaviour
 
     public void called(int num)
     {
+        Debug.Log(num);
         if (npc == num && num < dialogueList.Length)
         {   
             triggered = true;
