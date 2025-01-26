@@ -5,9 +5,14 @@ public class Puzzle : MonoBehaviour
 {
     private List<Node> nodes = new List<Node>();
     
-    private void Start()
+    public void Start()
     {
-        nodes.AddRange(GetComponentsInChildren<Node>());
+        nodes.Clear();
+        nodes.AddRange(GetComponentsInChildren<Node>(true));
+        foreach(var node in nodes)
+        {
+            node.gameObject.SetActive(true);
+        }
     }
 
     private void Update()

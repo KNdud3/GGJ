@@ -8,13 +8,20 @@ public class Node : MonoBehaviour
     private List<GameObject> edges = new List<GameObject>();
     private Renderer nodeRenderer;
 
-    private void Start()
+    void Start()
     {
         nodeRenderer = GetComponent<Renderer>();
         ValidateFirstLevelConnections();
         CreateEdges();
+        
+        SphereCollider collider = gameObject.GetComponent<SphereCollider>();
+        if (collider == null)
+        {
+            collider = gameObject.AddComponent<SphereCollider>();
+        }
+        collider.radius = 0.5f; 
+        collider.isTrigger = false;
     }
-
     private void OnDisable()
     {
         if (edges != null)
@@ -63,6 +70,7 @@ public class Node : MonoBehaviour
 
     private void OnMouseDown()
     {
+        Debug.Log($"Node clicked{gameObject.name}");
         if (connectedNodes.Count == 3)
         {
             PopConnectedNodes();
