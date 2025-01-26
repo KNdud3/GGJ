@@ -119,4 +119,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedNodes: []
-  edgePrefab: {fileID: 0}
+  edgePrefab: {fileID: 4007438587332569769, guid: ed0611b42dffff94c9b445c535153c13, type: 3}

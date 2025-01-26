@@ -14,21 +14,39 @@ public class Node : MonoBehaviour
         CreateEdges();
     }
 
+    private void OnDisable()
+    {
+        if (edges != null)
+        {
+            DestroyEdges();
+        }
+    }
+
     private void CreateEdges()
     {
-        DestroyEdges(); 
-        foreach (GameObject connectedNode in connectedNodes)
+        if (!Application.isPlaying) return;
+        if (edges == null) edges = new List<GameObject>();
+        
+        DestroyEdges();
+
+        foreach (var node in connectedNodes)
         {
-            if (connectedNode != null)
+            if (node == null) continue;
+
+            var edge = Instantiate(edgePrefab, transform);
+            if (edge != null)
             {
-                GameObject edge = Instantiate(edgePrefab, transform);
-                LineRenderer line = edge.GetComponent<LineRenderer>();
-                line.SetPosition(0, transform.position);
-                line.SetPosition(1, connectedNode.transform.position);
-                edges.Add(edge);
+                var line = edge.GetComponent<LineRenderer>();
+                if (line != null)
+                {
+                    line.SetPosition(0, transform.position);
+                    line.SetPosition(1, node.transform.position);
+                    edges.Add(edge);
+                }
             }
         }
     }
+
 
     private void OnMouseDown()
     {
@@ -37,46 +55,37 @@ public class Node : MonoBehaviour
             PopConnectedNodes();
         }
     }
-
     private void PopConnectedNodes()
     {
-        List<GameObject> nodesToPop = new List<GameObject>(connectedNodes);
-        HashSet<GameObject> newConnections = new HashSet<GameObject>();
+        var nodesToPop = new List<GameObject>(connectedNodes);
+        var newConnections = new HashSet<GameObject>();
 
-        
-        foreach (GameObject node in nodesToPop)
+        foreach (var node in nodesToPop)
         {
-            Node nodeScript = node.GetComponent<Node>();
-            if (nodeScript != null)
-            {
-                
-                foreach (GameObject connection in nodeScript.connectedNodes)
-                {
-                    if (connection != null && connection != gameObject && !nodesToPop.Contains(connection))
-                    {
-                        newConnections.Add(connection);
-                    }
-                }
-                
-                
-                foreach (GameObject connection in nodeScript.connectedNodes)
-                {
-                    Node connScript = connection?.GetComponent<Node>();
-                    if (connScript != null)
-                    {
-                        connScript.connectedNodes.Remove(node);
-                        connScript.DestroyEdges();
-                        connScript.CreateEdges();
-                    }
-                }
+            var nodeScript = node.GetComponent<Node>();
+            if (nodeScript == null) continue;
 
-                
-                nodeScript.DestroyEdges();
-                Destroy(node);
+            foreach (var connection in nodeScript.connectedNodes)
+            {
+                if (connection == null || connection == gameObject || nodesToPop.Contains(connection))
+                    continue;
+
+                newConnections.Add(connection);
+                var connScript = connection.GetComponent<Node>();
+                if (connScript != null)
+                {
+                    connScript.connectedNodes.Remove(node);
+                    if (!connScript.connectedNodes.Contains(gameObject))
+                    {
+                        connScript.connectedNodes.Add(gameObject);
+                    }
+                }
             }
+
+            nodeScript.DestroyEdges();
+            Destroy(node);
         }
 
-        
         connectedNodes.Clear();
         connectedNodes.AddRange(newConnections);
         CreateEdges();
@@ -84,11 +93,14 @@ public class Node : MonoBehaviour
 
     public void DestroyEdges()
     {
-        foreach (GameObject edge in edges)
+        foreach (var edge in edges)
         {
             if (edge != null)
             {
-                Destroy(edge);
+                if (Application.isPlaying)
+                    Destroy(edge);
+                else
+                    DestroyImmediate(edge);
             }
         }
         edges.Clear();
