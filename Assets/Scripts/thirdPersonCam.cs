@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 public class ThirdPersonCamera : MonoBehaviour
@@ -16,6 +17,8 @@ public class ThirdPersonCamera : MonoBehaviour
     public float yMinLimit = -30f; // Min vertical angle
     public float yMaxLimit = 60f; // Max vertical angle
 
+    public LayerMask collisionMask;
+    public float collisionOffset = 0.2f;
     void Start()
     {
         // Set initial zoom level based on the offset
@@ -44,6 +47,13 @@ public class ThirdPersonCamera : MonoBehaviour
             Quaternion rotation = Quaternion.Euler(currentY, currentX, 0);
             Vector3 position = player.position + rotation * zoomedOffset;
 
+            RaycastHit hit;
+            Vector3 directionToCamera = position - player.position;
+            if (Physics.Raycast(player.position, directionToCamera.normalized, out hit, directionToCamera.magnitude, collisionMask))
+            {
+                // If an obstacle is detected, adjust the camera position to stop at the obstacle
+                position = hit.point - directionToCamera.normalized * collisionOffset;
+            }
             // Set camera position and look at the player
             transform.position = Vector3.Lerp(transform.position,position,Time.deltaTime*5f);
             transform.LookAt(player.position);
