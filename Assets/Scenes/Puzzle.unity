@@ -678,11 +678,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e58c37d6276f8146aa92bd088348281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puzzles:
+  puzzlePrefabs:
   - {fileID: 1455052640}
   - {fileID: 1076869619}
-  mainSceneName: Main Scene
-  puzzleSceneName: Puzzle
 --- !u!4 &707891333
 Transform:
   m_ObjectHideFlags: 0
@@ -1056,6 +1054,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 725e18d4555fd114f8a98bcc4b6ee053, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  puzzleIndex: 1
 --- !u!1001 &1191499386
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1551,6 +1550,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 725e18d4555fd114f8a98bcc4b6ee053, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  puzzleIndex: 0
 --- !u!1001 &1465172387
 PrefabInstance:
   m_ObjectHideFlags: 0
