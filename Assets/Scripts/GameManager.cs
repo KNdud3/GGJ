@@ -1,18 +1,67 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
-public class NewBehaviourScript : MonoBehaviour
+
+public class GameManager : MonoBehaviour 
 {
-    // Start is called before the first frame update
-    void Start()
+    public static GameManager Instance { get; private set; }
+    public List<GameObject> puzzles;
+    private int currentPuzzleIndex = 0;
+    public Camera mainCamera;
+    public Camera puzzleCamera;
+    
+
+
+    private void Awake()
     {
-        
+        if (Instance == null)
+        {
+            Instance = this;
+            puzzleCamera.gameObject.SetActive(false);
+            DeactivateAllPuzzles();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void StartPuzzle()
     {
-        
+        if (currentPuzzleIndex < puzzles.Count)
+        {
+            mainCamera.gameObject.SetActive(false);
+            puzzleCamera.gameObject.SetActive(true);
+            puzzles[currentPuzzleIndex].SetActive(true);
+            EnableCursor();
+        }
+    }
+
+    public void ReturnToMain()
+    {
+        DeactivateAllPuzzles();
+        puzzleCamera.gameObject.SetActive(false);
+        mainCamera.gameObject.SetActive(true);
+    }
+
+    private void DeactivateAllPuzzles()
+    {
+        foreach (var puzzle in puzzles)
+        {
+            puzzle.SetActive(false);
+        }
+    }
+
+    private void EnableCursor()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void OnPuzzleComplete()
+    {
+        puzzles[currentPuzzleIndex].SetActive(false);
+        currentPuzzleIndex++;
+        ReturnToMain();
     }
 }

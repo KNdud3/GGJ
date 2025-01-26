@@ -42,11 +42,14 @@ public class TextBubble : MonoBehaviour
     private bool triggered = false;
     private bool overTrigger = false;
     private bool correctNpc = false;
+    
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
         elements.SetActive(false);
+        gameManager = GameManager.Instance;
     }
 
     // Update is called once per frame
@@ -78,11 +81,12 @@ public class TextBubble : MonoBehaviour
                 }
                 else
                 {
-                    elements.SetActive(false); // Close speech bubble
                     if (correctNpc){
+                        gameManager.StartPuzzle();
                         correctNpc = false;
                         npc++;
                     }
+                    elements.SetActive(false); // Close speech bubble
                     dialogueIndex = 0;
                     overTrigger = false;
                     cameraScript.enabled = true;

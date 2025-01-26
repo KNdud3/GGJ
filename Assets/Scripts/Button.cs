@@ -19,7 +19,7 @@ public class menu : MonoBehaviour
 
     void OnButtonClicked()
     {
-        SceneManager.LoadScene (sceneName:"Main Scene");
+        SceneManager.LoadScene(sceneName:"Main Scene");
         Debug.Log("clicked");
     }
 }

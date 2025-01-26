@@ -471,6 +471,7 @@ GameObject:
   - component: {fileID: 585717742}
   - component: {fileID: 585717741}
   - component: {fileID: 585717740}
+  - component: {fileID: 585717743}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -552,6 +553,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -1.151, y: 0, z: 0}
+--- !u!114 &585717743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585717739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c49b4cc203aa6414fae5c798d1d0e7d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EventMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_MaxRayIntersections: 0
 --- !u!1 &617258851 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3214555353682664996, guid: df01b7f6a893bda4f937e3f09a09ccfa, type: 3}
@@ -661,6 +678,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e58c37d6276f8146aa92bd088348281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  puzzles:
+  - {fileID: 1455052640}
+  - {fileID: 1076869619}
+  mainSceneName: Main Scene
+  puzzleSceneName: Puzzle
 --- !u!4 &707891333
 Transform:
   m_ObjectHideFlags: 0
@@ -986,6 +1008,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1076869620}
+  - component: {fileID: 1076869621}
   m_Layer: 0
   m_Name: Puzzle2
   m_TagString: Untagged
@@ -1021,6 +1044,18 @@ Transform:
   - {fileID: 243845757}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1076869621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076869619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 725e18d4555fd114f8a98bcc4b6ee053, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1191499386
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1473,6 +1508,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1455052641}
+  - component: {fileID: 1455052642}
   m_Layer: 0
   m_Name: Puzzle1
   m_TagString: Untagged
@@ -1503,6 +1539,18 @@ RectTransform:
   m_AnchoredPosition: {x: 535, y: 217}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1455052642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455052640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 725e18d4555fd114f8a98bcc4b6ee053, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1465172387
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1575,37 +1623,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3214555353682664996, guid: df01b7f6a893bda4f937e3f09a09ccfa, type: 3}
   m_PrefabInstance: {fileID: 680425665}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1501725163
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1501725164}
-  m_Layer: 0
-  m_Name: Puzzle3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1501725164
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1501725163}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 537.04, y: 218.46, z: 95}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1605538359
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2066,5 +2083,4 @@ SceneRoots:
   - {fileID: 1298497814}
   - {fileID: 1455052641}
   - {fileID: 1076869620}
-  - {fileID: 1501725164}
   - {fileID: 707891333}
